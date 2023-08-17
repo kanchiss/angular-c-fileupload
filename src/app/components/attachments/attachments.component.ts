@@ -8,10 +8,7 @@ import { DocService } from 'src/app/services/doc.service';
   styleUrls: ['./attachments.component.scss'],
 })
 export class AttachmentsComponent {
-  progress = 0;
-  message = '';
-
-  constructor(private dS: DocService) {}
+  constructor(public dS: DocService) {}
 
   uploadFile = () => {
     let b = new Blob();
@@ -21,15 +18,6 @@ export class AttachmentsComponent {
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
-    this.dS.uploadFile(formData).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round((100 * event.loaded) / event.total);
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
-        }
-      },
-      error: (err: HttpErrorResponse) => console.log(err),
-    });
+    this.dS.uploadFile(formData).subscribe((r) => console.log(r));
   };
 }

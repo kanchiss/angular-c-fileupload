@@ -1,15 +1,15 @@
 <p>attachments works!</p>
-<div class="row" style="margin-bottom: 15px">
-  <div class="col-md-3">
+<div class="" style="margin-bottom: 15px">
+  <div class="">
     <input type="file" #file placeholder="Choose file" style="display: none" />
     <button type="button" class="btn btn-success" (click)="uploadFile()">
       Upload File
     </button>
   </div>
-  <div class="col-md-4">
-    <span class="upload" *ngIf="progress > 0"> {{ progress }}% </span>
-    <span class="upload" *ngIf="message">
-      {{ message }}
+  <div class="">
+    <span class="upload" *ngIf="dS.progress > 0"> {{ dS.progress }}% </span>
+    <span class="upload" *ngIf="dS.message">
+      {{ dS.message }}
     </span>
   </div>
 </div>

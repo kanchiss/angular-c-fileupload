@@ -1,6 +1,11 @@
 import { Injectable, Query } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpEventType,
+} from '@angular/common/http';
+import { Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +17,14 @@ export class DocService {
 
   uploadFile(query: FormData): Observable<any> {
     return this.http
-      .post('https://localhost:44348/Product/attach/64dc73214b0a03851bcb4187', query, {
-        reportProgress: true,
-        observe: 'events',
-      })
+      .post(
+        'https://localhost:44348/Product/attach/64dc73214b0a03851bcb4187',
+        query,
+        {
+          reportProgress: true,
+          observe: 'events',
+        }
+      )
       .pipe(
         map((event: any) => {
           if (event.type === HttpEventType.UploadProgress)
@@ -23,6 +32,11 @@ export class DocService {
           else if (event.type === HttpEventType.Response) {
             this.message = 'Upload success.';
           }
+          return of(true);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          console.log(err);
+          return of(false);
         })
       );
   }
